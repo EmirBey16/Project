@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<ul>
+    <div class="px-4 py-5 my-5 text-center">
+        <h1 class="display-5 fw-bold text-body-emphasis">Гарри Поттер</h1>
+        <div class="col-lg-6 mx-auto">
+          <p class="lead mb-4">На Этом сайте вы сможете прочитать краткое содержание всех частей Гарри Поттера .</p>
+        </div>
+    </div>
+    {% for p in posts %}
+    {% if p.is_published %}
+
+    <div class="container py-4">
+        <div class="row align-items-md-stretch">
+          <div class="col-lg-14 mx-auto">
+              <div class="h-100 p-5 text-bg-dark rounded-3">
+                <h2>{{ p.title }}</h2>
+                <div class="p-3 text-light bg-danger border border-primary-subtle rounded-5">
+                {{ p.content|truncatewords:20  }}</div>
+                 <a class="btn btn-outline-light" href="{{ p.get_absolute_url }}" role="button">Read more</a>
+              </div>
+          </div>
+        </div>
+        <div class="p-3 text-light bg-danger border border-primary-subtle rounded-3">
+            {{ p.time_create  }} {{ p.slug }}
+                    tags:
+            {% for tag in p.tags.all %}
+
+                <a class="btn btn-outline-light" href="{{ tag.get_absolute_url }}" role="button">{{ tag.title }}</a>
+
+            {% endfor %}
+
+        </div>
+    </div>
+    <hr>
+
+    {% endif %}
+    {% endfor %}
+</ul>
+
+{% endblock %}
